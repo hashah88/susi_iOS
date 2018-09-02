@@ -82,11 +82,11 @@ extension SkillListingViewController {
         usleep(300000)
         print("Printing params ....... ")
         print(params);
-        Client.sharedInstance.getSkillData(params, { (skill, success, _) in
+        Client.sharedInstance.getSkillData(params, { (skills, success, _) in
             DispatchQueue.main.async {
                 if success {
-
-                    self.skills[group] = skill
+//                    self.skills[group] = skills
+                    self.addSkillsToDB(skills: skills!)
                 } else {
                     self.skills[group] = nil
                 }
@@ -94,9 +94,15 @@ extension SkillListingViewController {
             }
         })
     }
-
-    func addSkillsToDB(skill : Skill){
-        
+   // This basically adds all the Skill Object to Realm
+    func addSkillsToDB(skills : [Skill]){
+        if !skills.isEmpty {
+            for skill in skills {
+                try! self.realm.write {
+                    self.realm.add(skill)
+                }
+            }
+        }
     }
 
     func checkReachability() {

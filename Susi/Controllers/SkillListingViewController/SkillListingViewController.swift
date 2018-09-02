@@ -100,11 +100,11 @@ class SkillListingViewController: UITableViewController {
             let group = groups?[indexPath.row] {
             cell.groupName = group
             cell.skillListController = self
-
-            // This will change something like this :
-            // let skills = realm.objects(Skill).filter("group == group")
-            // cell.skills = skills
-            // first get all the skills object from realm whose group matches then assign it
+//            let groupName = group
+            let skillsTesting = realm.objects(Skill.self)
+            for skill in skillsTesting{
+                print(skill)
+            }
 
             cell.skills = skills[group]
             return cell
