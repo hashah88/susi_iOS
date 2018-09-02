@@ -9,6 +9,7 @@
 import UIKit
 import Material
 import Reachability
+import RealmSwift
 
 class SkillListingViewController: UITableViewController {
 
@@ -16,6 +17,8 @@ class SkillListingViewController: UITableViewController {
 
     let reachability = Reachability()!
     var dismissChecker: Bool?
+    // realm instance
+    let realm = try! Realm()
 
     lazy var settingsButton: IconButton = {
         let ib = IconButton()
@@ -97,6 +100,12 @@ class SkillListingViewController: UITableViewController {
             let group = groups?[indexPath.row] {
             cell.groupName = group
             cell.skillListController = self
+
+            // This will change something like this :
+            // let skills = realm.objects(Skill).filter("group == group")
+            // cell.skills = skills
+            // first get all the skills object from realm whose group matches then assign it
+
             cell.skills = skills[group]
             return cell
         }

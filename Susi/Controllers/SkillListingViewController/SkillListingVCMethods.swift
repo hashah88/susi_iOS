@@ -51,6 +51,9 @@ extension SkillListingViewController {
             DispatchQueue.main.async {
                 if success {
                     self.groups = groups
+                    print("First testing");
+                    print("Groups are:");
+                    print(self.groups ?? "not sure lol");
                     self.getAllSkills()
                 } else {
                     print(message ?? "error")
@@ -77,9 +80,12 @@ extension SkillListingViewController {
     func getSkillData(params: [String: AnyObject], group: String) {
         // sleep 0.3 seconds to bypass server request failure
         usleep(300000)
+        print("Printing params ....... ")
+        print(params);
         Client.sharedInstance.getSkillData(params, { (skill, success, _) in
             DispatchQueue.main.async {
                 if success {
+
                     self.skills[group] = skill
                 } else {
                     self.skills[group] = nil
@@ -87,6 +93,10 @@ extension SkillListingViewController {
                 self.count += 1
             }
         })
+    }
+
+    func addSkillsToDB(skill : Skill){
+        
     }
 
     func checkReachability() {
